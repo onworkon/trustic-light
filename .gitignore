@@ -1,0 +1,29 @@
+# Dependencies and generated artifacts
+node_modules/
+/dist/
+/release/
+coverage/
+*.tsbuildinfo
+
+# Credentials, original packages, and local tooling
+.archive/
+private/
+.local/
+.codex/
+.agents/
+.env*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crx
+*.log
+
+# Editor and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo

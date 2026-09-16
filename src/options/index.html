@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>신뢰등 설정</title>
+    <link rel="stylesheet" href="options.css" />
+    <script type="module" src="options.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="icons/icon48.png" width="48" height="48" alt="" />
+        <div>
+          <p class="eyebrow">TRUSTLIGHT</p>
+          <h1>신뢰등 설정</h1>
+        </div>
+        <span id="version" class="version"></span>
+      </header>
+      <p class="intro">
+        읽는 순간, 한 번 더 생각하기.<br />글의 표현과 근거를 신호등으로
+        살펴보세요.
+      </p>
+      <form id="settings-form">
+        <fieldset id="fields" disabled>
+          <section class="card">
+            <div class="section-title">
+              <span class="step">01</span>
+              <h2>나의 API 연결</h2>
+            </div>
+            <p class="description">
+              본인의 Anthropic API 키로 Claude Opus 5를 사용해요. API 이용
+              요금은 본인 계정에 청구돼요.
+            </p>
+            <label for="api-key">Anthropic API 키</label>
+            <div class="input-row">
+              <input
+                id="api-key"
+                type="password"
+                placeholder="sk-ant-…"
+                autocomplete="off"
+                spellcheck="false"
+                maxlength="256"
+                aria-describedby="key-help"
+              /><button
+                id="show-key"
+                type="button"
+                class="outline"
+                aria-pressed="false"
+              >
+                표시
+              </button>
+            </div>
+            <p id="key-help" class="help">
+              키는 이 브라우저의 로컬 저장소에 보관돼요. Chrome 동기화와 배포
+              파일에는 포함되지 않아요.
+            </p>
+            <p id="key-state" class="help"></p>
+            <div class="row">
+              <button id="test-key" type="button" class="outline">
+                연결 확인</button
+              ><button id="remove-key" type="button" class="text-button">
+                저장된 키 삭제</button
+              ><a
+                href="https://platform.claude.com/settings/keys"
+                target="_blank"
+                rel="noopener noreferrer"
+                >API 키 관리 ↗</a
+              >
+            </div>
+            <p
+              id="test-status"
+              role="status"
+              aria-live="polite"
+              class="help"
+            ></p>
+          </section>
+          <section class="card">
+            <div class="section-title">
+              <span class="step">02</span>
+              <h2>본문 전송과 개인정보</h2>
+            </div>
+            <div class="privacy-note">
+              <p><strong>분석은 버튼을 누를 때만 시작돼요.</strong></p>
+              <p>
+                현재 페이지의 제목과 본문 최대 9,000자가 분석을 위해
+                <strong>Anthropic</strong>으로 전송돼요. 분석된 글과 결과를 확장
+                프로그램 저장소에 기록하지 않아요.
+              </p>
+              <p>
+                페이지 주소, 쿠키, 비밀번호, 입력 중인 내용은 보내지 않아요.
+                다만 본문 자체에 적힌 이름·연락처 등의 개인정보는 포함될 수
+                있어요.
+              </p>
+            </div>
+            <label class="check"
+              ><input id="consent" type="checkbox" /><span
+                >위 내용을 확인했으며, 내가 분석을 요청한 글을 Anthropic에
+                전송하는 데 동의해요.</span
+              ></label
+            >
+            <p class="help">
+              동의를 해제하고 저장하면 분석을 중지해요. 전송된 정보의 처리는
+              Anthropic의 정책을 따라요.
+              <a href="privacy.html" target="_blank" rel="noopener"
+                >개인정보 처리방침</a
+              >
+            </p>
+          </section>
+          <section class="card">
+            <div class="section-title">
+              <span class="step">03</span>
+              <h2>화면 설정</h2>
+            </div>
+            <label class="check"
+              ><input id="enabled" type="checkbox" /><span
+                >웹페이지에 신뢰등 표시</span
+              ></label
+            >
+            <label for="panel-side" class="space-top"
+              >결과 패널의 기본 방향</label
+            >
+            <select id="panel-side">
+              <option value="left">신호등 왼쪽으로 펼치기</option>
+              <option value="right">신호등 오른쪽으로 펼치기</option>
+            </select>
+            <p class="help">
+              신호등 아래 손잡이를 끌거나, 손잡이에 초점을 두고 방향키를 눌러
+              위치를 옮길 수 있어요.
+            </p>
+          </section>
+          <div class="save-bar">
+            <p id="save-status" role="status" aria-live="polite">
+              변경한 설정을 저장해 주세요.
+            </p>
+            <button id="save" type="submit" class="primary">설정 저장</button>
+          </div>
+        </fieldset>
+      </form>
+      <footer>
+        AI 분석은 글의 표현과 근거에 관한 참고 정보이며 사실 검증 결과가
+        아니에요.<br />제공된 점수만으로 정보의 진위를 판단하지 마세요.
+      </footer>
+      <noscript>신뢰등 설정을 사용하려면 JavaScript가 필요해요.</noscript>
+    </main>
+  </body>
+</html>
