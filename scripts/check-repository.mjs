@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { lstat, realpath } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -16,12 +17,35 @@ export async function checkRepository(root) {
       stdio: ["pipe", "pipe", "pipe"],
     });
   let gitRoot;
+  const hasGitMetadata = await lstat(resolve(root, ".git")).then(
+    () => true,
+    (error) => {
+      if (error.code === "ENOENT") return false;
+      throw error;
+    },
+  );
   try {
     gitRoot = git(["rev-parse", "--show-toplevel"]).toString().trim();
   } catch {
-    /* Source ZIPs do not contain .git. */
+    if (hasGitMetadata)
+      throw new Error("Cannot inspect the local Git repository.");
+    // Source ZIPs do not contain .git; Git may also find an enclosing repository.
   }
-  if (gitRoot && resolve(gitRoot) === resolve(root)) {
+  let isRepositoryRoot = false;
+  if (gitRoot) {
+    // Windows can report the same directory with different case or an 8.3 alias.
+    const [requested, discovered] = await Promise.all([
+      realpath(root),
+      realpath(gitRoot),
+    ]);
+    isRepositoryRoot =
+      process.platform === "win32"
+        ? requested.toLowerCase() === discovered.toLowerCase()
+        : requested === discovered;
+  }
+  if (hasGitMetadata && !isRepositoryRoot)
+    throw new Error("Git resolved an unexpected repository root.");
+  if (isRepositoryRoot) {
     // Inspect the index as well: .gitignore does not protect files already staged.
     const staged = git(["ls-files", "--stage", "-z"])
       .toString()

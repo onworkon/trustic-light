@@ -66,11 +66,20 @@ test("upload checks reject force-added private files and a secret left in the Gi
       (await collectSourceFiles(root)).has("private/bootstrap.json"),
       false,
     );
+    await writeFile(resolve(root, ".git"), "broken repository metadata");
+    await assert.rejects(checkRepository(root), /Cannot inspect/);
+    await rm(resolve(root, ".git"));
     git(["init", "-b", "main"]);
     git(["add", "."]);
     await checkRepository(root);
     git(["add", "-f", "private/bootstrap.json"]);
     await assert.rejects(checkRepository(root), /Disallowed source path/);
+    if (process.platform === "win32") {
+      await assert.rejects(
+        checkRepository(root.toUpperCase()),
+        /Disallowed source path/,
+      );
+    }
     git(["rm", "--cached", "private/bootstrap.json"]);
     const original = await readFile(resolve(root, "src/example.ts"));
     await writeFile(
