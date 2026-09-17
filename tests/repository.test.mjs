@@ -21,7 +21,7 @@ test("source export rejects private, generated, traversal and arbitrary binary p
     "src/../private/key.json",
     "src/secret.pem",
     "src/test.png",
-    "docs/.git/config",
+    "src/.git/config",
     "C:\\private\\file.ts",
   ])
     assert.throws(() => assertSourcePath(name));

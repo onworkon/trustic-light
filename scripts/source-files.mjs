@@ -7,22 +7,13 @@ export const ROOT_FILES = [
   ".gitignore",
   ".node-version",
   ".prettierignore",
-  "CONTRIBUTING.md",
   "README.md",
-  "SECURITY.md",
   "manifest.json",
   "package.json",
   "package-lock.json",
   "tsconfig.json",
 ];
-export const SOURCE_DIRS = [
-  ".github",
-  "docs",
-  "public",
-  "scripts",
-  "src",
-  "tests",
-];
+export const SOURCE_DIRS = [".github", "public", "scripts", "src", "tests"];
 const blockedParts = new Set([
   ".git",
   ".archive",
